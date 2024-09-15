@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 // Define the response structure from the signup API
@@ -10,14 +10,13 @@ interface SignupResponse {
 
 const SignupPage: React.FC = () => {
   const [name, setName] = useState<string>("");
-  const [password, setPassword] = useState<string>(""); 
-  const [confirmPassword, setConfirmPassword] = useState<string>(""); 
-  const [email, setEmail] = useState<string>(""); 
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [dob, setDob] = useState<string>("");
-  const [error, setError] = useState<string | null>(null); 
+  const [error, setError] = useState<string | null>(null);
   const { handleSignupSuccess } = useContext(AuthContext);
   const navigate = useNavigate();
-
 
   const signUp = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -60,7 +59,7 @@ const SignupPage: React.FC = () => {
 
       console.log("result", result);
 
-      if (result.success) {
+      if (result.success===true) {
         handleSignupSuccess(email);
         navigate("/otp-verification");
       } else {
@@ -74,7 +73,7 @@ const SignupPage: React.FC = () => {
 
   return (
     <div className="bg-gradient-to-r from-blue-500 to-cyan-500 h-[100vh] w-full flex justify-center items-center">
-      <div className="bg-white w-[280px] py-3 px-4 flex flex-col items-center rounded-xl">
+      <div className="bg-white w-[320px] py-3 px-4 flex flex-col items-center rounded-xl">
         <h1 className="text-black text-xl font-bold mb-4">Sign Up</h1>
         <section className="flex flex-col w-full">
           <label htmlFor="name" className="font-semibold text-md">
@@ -85,7 +84,7 @@ const SignupPage: React.FC = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Type your name"
-            className="outline-none border-b-[2px] pb-1 mb-3 text-sm border-gray-300"
+            className="outline-none border-b-[2px] mt-1 rounded-md  mb-3 text-md border-gray-300"
           />
         </section>
         <section className="flex flex-col w-full">
@@ -97,7 +96,7 @@ const SignupPage: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Type your password"
-            className="outline-none border-b-[2px] pb-1 mb-3 text-sm border-gray-300"
+            className="outline-none border-b-[2px] mt-1 rounded-md mb-3 text-md border-gray-300"
           />
         </section>
         <section className="flex flex-col w-full">
@@ -109,7 +108,7 @@ const SignupPage: React.FC = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Confirm your password"
-            className="outline-none border-b-[2px] pb-1 mb-3 text-sm border-gray-300"
+            className="outline-none border-b-[2px] mt-1 rounded-md mb-3 text-md border-gray-300"
           />
         </section>
         <section className="flex flex-col w-full">
@@ -121,7 +120,7 @@ const SignupPage: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Type your email"
-            className="outline-none border-b-[2px] pb-1 mb-3 text-sm border-gray-300"
+            className="outline-none border-b-[2px] mt-1 rounded-md mb-3 text-md border-gray-300"
           />
         </section>
         <section className="flex flex-col w-full">
@@ -133,15 +132,21 @@ const SignupPage: React.FC = () => {
             value={dob}
             onChange={(e) => setDob(e.target.value)}
             placeholder="YYYY-MM-DD"
-            className="outline-none border-b-[2px] pb-1 mb-3 text-sm border-gray-300"
+            className="outline-none border-b-[2px] mt-1 rounded-md mb-3 text-md border-gray-300"
           />
         </section>
         <button
           onClick={signUp}
-          className="bg-gradient-to-r from-blue-500 to-cyan-500 py-[5px] px-[30px] mb-8 mt-4 text-white font-semibold rounded-full"
+          className="bg-gradient-to-r from-blue-500 to-cyan-500 py-[5px] w-full mb-2 mt-4 text-white font-semibold rounded-full"
         >
           Register
         </button>
+        <Link
+          to="/forgot-password"
+          className="text-center text-blue-500 mb-3 hover:underline"
+        >
+          Already have account?
+        </Link>
         {error && <p className="text-red-500">{error}</p>}
       </div>
     </div>

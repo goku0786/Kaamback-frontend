@@ -67,7 +67,7 @@ const SetPasswordPage: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Type your new password"
-            className="outline-none border-b-[2px] pb-1 mb-3 mt-1 text-sm border-gray-300"
+            className="outline-none border-b-[2px] rounded-md mb-3 mt-1 text-md border-gray-300"
           />
           <label htmlFor="confirmPassword" className="font-semibold text-md">
             Confirm New Password
@@ -77,11 +77,11 @@ const SetPasswordPage: React.FC = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Confirm your new password"
-            className="outline-none border-b-[2px] pb-1 mb-3 mt-1 text-sm border-gray-300"
+            className="outline-none border-b-[2px]  rounded-md mb-3 mt-1 text-md border-gray-300"
           />
           <button
             type="submit"
-            className="bg-gradient-to-r from-blue-500 to-cyan-500 py-[5px] px-[30px] mb-4 mt-4 text-white font-semibold rounded-full"
+            className="bg-gradient-to-r from-blue-500 to-cyan-500 py-[5px] w-full my-4 text-white font-semibold rounded-full"
           >
             Set Password
           </button>

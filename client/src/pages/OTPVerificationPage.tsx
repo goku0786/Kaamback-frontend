@@ -32,13 +32,15 @@ const OTPVerification: React.FC = () => {
         body: JSON.stringify({ email, otp }),
       });
 
-      const result: VerifyOtpResponse = await response.json();  // Type the response
+      const result: VerifyOtpResponse = await response.json();  
 
-      if (result.success) {
+      console.log("result", result);
+
+      if (result.success===true) {
         setSuccess(true);
         setError(null);
-        handleOtpSuccess();  // Call the OTP success handler from context
-        navigate(redirectPath);  // Navigate based on the redirect path
+        handleOtpSuccess(result); 
+        navigate(redirectPath);  
       } else {
         setError("Wrong OTP. Please try again.");
         setSuccess(false);
@@ -55,19 +57,19 @@ const OTPVerification: React.FC = () => {
         <h1 className="font-bold">OTP Verification</h1>
         <section className="flex flex-col w-full">
           <label htmlFor="otp" className="font-semibold text-md">
-            OTP
+           Verify OTP
           </label>
           <input
             type="text"
             value={otp}
             onChange={(e) => setOtp(e.target.value)}
             placeholder="Enter OTP sent to your email"
-            className="outline-none border-b-[2px] pb-1 mb-3 text-sm border-gray-300"
+            className="outline-none border-b-[2px] mt-1 mb-3 text-md rounded-md border-gray-300"
           />
         </section>
         <button
           onClick={verifyOtp}
-          className="bg-gradient-to-r from-blue-500 to-cyan-500 py-[5px] px-[30px] mb-8 mt-4 text-white font-semibold rounded-full"
+          className="bg-gradient-to-r from-blue-500 to-cyan-500 py-[5px] w-full mb-8 mt-4 text-white font-semibold rounded-full"
         >
           Verify OTP
         </button>

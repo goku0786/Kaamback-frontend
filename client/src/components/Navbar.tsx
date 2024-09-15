@@ -1,31 +1,39 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { AuthContext } from "../context/AuthContext";
 import logoLight from "../assets/logoLight.png";
-
 
 function Navbar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const { user, logout } = useContext(AuthContext);
 
   const getLinkClass = (path: string) => {
     const isActive = location.pathname === path;
     return isActive ? "underline" : "hover:underline focus:underline";
   };
 
-  const textColor = location.pathname === "/" ? "text-white" : "md:text-[#041893] text-white";
-  const bgColor = location.pathname === "/" ? "" : "md:bg-[#041893] md:text-white text-[#041893] bg-white";
+  const textColor =
+    location.pathname === "/" ? "text-white" : "md:text-[#041893] text-white";
+  const bgColor =
+    location.pathname === "/"
+      ? ""
+      : "md:bg-[#041893] md:text-white text-[#041893] bg-white";
 
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
-    <div className=" absolute  w-full  z-10 top-0 left-0">
+    <div className="absolute w-full z-10 top-0 left-0">
       <div className="md:flex items-center justify-between md:bg-transparent bg-[#041893] py-3 md:px-10 px-7">
-        <div
-          className="font-bold text-2xl cursor-pointer flex items-center font-Oxanium
-      text-gray-800 "
-        >
-          <NavLink to="/" className={`text-white flex items-center gap-1 ${textColor}`}>
-            <img src={logoLight} alt="logo" className="h-7 " /> Kaamback
+        <div className="font-bold text-2xl cursor-pointer flex items-center font-Oxanium text-gray-800">
+          <NavLink
+            to="/"
+            className={`text-white flex items-center gap-1 ${textColor}`}
+          >
+            <img src={logoLight} alt="logo" className="h-7" /> Kaamback
           </NavLink>
         </div>
 
@@ -41,22 +49,22 @@ function Navbar() {
             open ? "top-[56px]" : "top-[-150px]"
           }`}
         >
-          <li className="font-semibold  p-1 md:p-1 pl-2 mr-7 rounded-sm">
+          <li className="font-semibold p-1 md:p-1 pl-2 mr-7 rounded-sm">
             <NavLink to="/" className={getLinkClass("/")}>
               Home
             </NavLink>
           </li>
-          <li className="font-semibold  p-1 pl-2 md:p-1 mr-7 rounded-sm">
+          <li className="font-semibold p-1 pl-2 md:p-1 mr-7 rounded-sm">
             <NavLink to="/career" className={getLinkClass("/career")}>
               Career
             </NavLink>
           </li>
-          <li className="font-semibold  p-1 pl-2 md:p-1 mr-7 rounded-sm">
+          <li className="font-semibold p-1 pl-2 md:p-1 mr-7 rounded-sm">
             <NavLink to="/ourteam" className={getLinkClass("/ourteam")}>
               Our Team
             </NavLink>
           </li>
-          <li className="font-semibold  p-1 pl-2 md:p-1 mr-7 rounded-sm">
+          <li className="font-semibold p-1 pl-2 md:p-1 mr-7 rounded-sm">
             <NavLink
               to="/company-dashboard"
               className={getLinkClass("/company-dashboard")}
@@ -64,34 +72,42 @@ function Navbar() {
               Company
             </NavLink>
           </li>
-          {false ? (
-            <li className="font-semibold  flex">
-              <NavLink
-                to="/logout"
-                className="hover:bg-black hover:text-cyan-300 p-1 pl-2 md:p-1 mr-2 rounded-sm"
-              >
-                Logout
-              </NavLink>
-              <span className=" text-md font-semibold text-[#041893] capitalize hover:underline hover:cursor-pointer hover:text-red-900 flex gap-2 pt-1">
-                Hi,
-                {/* {user.username} */}
-              </span>
-            </li>
-          ) : (
-            <div className= {`font-semibold mr-4 mt-2 md:mt-0  rounded-full ${bgColor}`}>
-              <li className="font-semibold w-[90px] px-3 text-center hover:underline cursor-pointer ">
-                <NavLink to="login">Login</NavLink>
+
+          {user ? (
+            // If the user is logged in, show Logout and Profile
+            <>
+              <li className="font-semibold flex gap-2 items-center">
+                <span className={`font-semibold  mt-2 px-3 py-1 md:mt-0 rounded-full capitalize ${bgColor}`}>
+                  Hi, {user?.user?.name}
+                  {console.log(user)}
+                </span>
+                <button
+                  onClick={handleLogout}
+                  className={`font-semibold mr-4 mt-2 px-3 py-1 md:mt-0 rounded-full capitalize ${bgColor} hover:underline`}
+                >
+                  Logout
+                </button>
               </li>
-            </div>
-            // <div className="flex gap-2 text-orange-800 font-semibold   mr-7  rounded-sm ">
-            //   <li className="font-semibold p-1  pl-2  hover:underline hover:text-blue-600">
-            //     <NavLink to="register">SignUp</NavLink>
-            //   </li>
-            //   <p className="pt-1">/</p>
-            //   <li className="font-semibold p-1 hover:underline hover:text-green-600">
-            //     <NavLink to="login">Login</NavLink>
-            //   </li>
-            // </div>
+            </>
+          ) : (
+            // If the user is not logged in, show Login and Signup options
+            <>
+              <>
+                <div
+                  className={`font-semibold mr-4 mt-2 md:mt-0 rounded-full ${bgColor}`}
+                >
+                  <li className="font-semibold py-2 px-3 text-center cursor-pointer">
+                    <NavLink to="/login" className="mr-2 hover:underline ">
+                      Login
+                    </NavLink>
+                    <span>/</span>
+                    <NavLink to="/signup" className="ml-2 hover:underline ">
+                      SignUp
+                    </NavLink>
+                  </li>
+                </div>
+              </>
+            </>
           )}
         </ul>
       </div>
