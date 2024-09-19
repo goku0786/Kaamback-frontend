@@ -142,7 +142,7 @@ const SignupPage: React.FC = () => {
           Register
         </button>
         <Link
-          to="/login"
+          to="/forgot"
           className="text-center text-blue-500 mb-3 hover:underline"
         >
           Already have account?
