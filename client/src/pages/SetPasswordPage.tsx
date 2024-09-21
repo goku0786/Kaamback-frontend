@@ -3,24 +3,29 @@ import { useNavigate } from "react-router-dom";
 
 // Define the expected response type from the server
 interface SetPasswordResponse {
-  success: boolean;
+  status: string;
   message?: string;
 }
 
 const SetPasswordPage: React.FC = () => {
-  const [password, setPassword] = useState<string>(""); 
-  const [confirmPassword, setConfirmPassword] = useState<string>(""); 
+  const [password, setPassword] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const navigate = useNavigate();
+
+  const checkCookies = () => {
+    console.log(document.cookie); // Log the current cookies
+  };
 
   // Handle form submission and password setting
   const handleSetPassword = async (event: React.FormEvent) => {
     event.preventDefault();
 
     // Basic validation
-    if (!password || !confirmPassword) {
-      setError("Please fill in both fields");
+    if (!password || !confirmPassword || !email) {
+      setError("Please fill in all fields");
       return;
     }
     if (password !== confirmPassword) {
@@ -29,22 +34,24 @@ const SetPasswordPage: React.FC = () => {
     }
 
     try {
+      checkCookies();
+      const item = { email, newPassword: password };
       setError(null);
-      const response = await fetch("/api/auth/set-password", {
+      const response = await fetch("/api/auth/setpassword", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify(item),
+        credentials: "include",
       });
 
       const result: SetPasswordResponse = await response.json();
+      console.log(result);
 
-      if (result.success === true) {
+      if (result.status === "true") {
         setSuccess("Password has been reset successfully");
-        setTimeout(() => {
-          navigate("/login");
-        }, 1000);
+        navigate("/login");
       } else {
         setError(result.message || "Failed to reset password");
       }
@@ -59,6 +66,16 @@ const SetPasswordPage: React.FC = () => {
       <div className="bg-white w-[280px] py-3 px-4 flex flex-col items-center rounded-xl">
         <h1 className="text-black text-xl font-bold mb-4">Set New Password</h1>
         <form onSubmit={handleSetPassword} className="flex flex-col w-full">
+          <label htmlFor="email" className="font-semibold text-md">
+            Email Address
+          </label>
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
+            className="outline-none border-b-[2px] rounded-md mb-3 mt-1 text-md border-gray-300"
+          />
           <label htmlFor="password" className="font-semibold text-md">
             New Password
           </label>

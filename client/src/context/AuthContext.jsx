@@ -21,11 +21,17 @@ export const AuthProvider = ({ children }) => {
   const handleForgotPasswordSuccess = (userEmail) => {
     setEmail(userEmail);
     setIsVerifiedForOtp(true);
-    setRedirectPath("/set-password");
+    setRedirectPath("/");
   };
 
   // Function to reset verification and redirect path after successful OTP
   const handleOtpSuccess = (userData) => {
+    setIsVerifiedForOtp(false);
+    setUser(userData);
+    setEmail(null);
+  };
+
+  const handleOtpSuccessForForgotPassword = (userData) => {
     setIsVerifiedForOtp(false);
     setUser(userData);
     setEmail(null);
@@ -61,6 +67,7 @@ export const AuthProvider = ({ children }) => {
         handleSignupSuccess,
         handleForgotPasswordSuccess,
         handleOtpSuccess,
+        handleOtpSuccessForForgotPassword,
         loginuser, 
         logout,
       }}

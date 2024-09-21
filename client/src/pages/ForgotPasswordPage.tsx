@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 // Define the response structure from the forgot password API
 interface ForgotPasswordResponse {
-  success: boolean;
+  status: string;
   message?: string;
 }
 
 const ForgotPasswordPage: React.FC = () => {
-  const [email, setEmail] = useState<string>(""); 
-  const [error, setError] = useState<string | null>(null); 
-  const [message, setMessage] = useState<string | null>(null); 
+  const [email, setEmail] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+  const { handleForgotPasswordSuccess } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleForgotPassword = async (event: React.FormEvent) => {
@@ -24,11 +26,12 @@ const ForgotPasswordPage: React.FC = () => {
     try {
       setError(null);
 
-      const response = await fetch("/api/auth/forgot-password", {
+      const response = await fetch("/api/auth/forgot", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ email }),
       });
 
@@ -37,12 +40,12 @@ const ForgotPasswordPage: React.FC = () => {
       }
 
       const result: ForgotPasswordResponse = await response.json();
+      console.log(result);
 
-      if (result.success) {
+      if (result.status === "true") {
         setMessage("OTP sent. Redirecting to verification...");
-        setTimeout(() => {
-          navigate("/otp-verification");
-        }, 2000); 
+        handleForgotPasswordSuccess(email);
+        navigate("/forgot-verify-otp");
       } else {
         setError(result.message || "Failed to send OTP");
       }
