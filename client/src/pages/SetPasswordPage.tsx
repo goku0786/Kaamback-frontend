@@ -37,7 +37,7 @@ const SetPasswordPage: React.FC = () => {
       checkCookies();
       const item = { email, newPassword: password };
       setError(null);
-      const response = await fetch("/api/auth/setpassword", {
+      const response = await fetch("/api/user/setpassword", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

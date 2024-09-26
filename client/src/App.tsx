@@ -12,11 +12,19 @@ const HomePage = lazy(() => import("./pages/Home"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const OurTeam = lazy(() => import("./pages/OurTeam"));
 const Career = lazy(() => import("./pages/Career"));
+const Hire = lazy(() => import("./pages/Hire"));
 const YourHires = lazy(() => import("./components/YourHires"));
 const CompanyDashboard = lazy(() => import("./pages/CompanyDashboard"));
 const Profile = lazy(() => import("./pages/Profile"));
 const YourProjects = lazy(() => import("./components/YourProjects"));
 const ForgotVerifyOtpPage = lazy(() => import("./pages/ForgotVerifyOtp"));
+const HiringProcess = lazy(() => import("./pages/Hiring/HiringProcess"));
+const ApplicationReview = lazy(
+  () => import("./pages/Hiring/ApplicationReview")
+);
+const LookJobs = lazy(() => import("./pages/LookJobs"));
+const OpeningApplication = lazy(() => import("./pages/OpeningApplication"));
+const ApplicationSubmitted = lazy(() => import("./pages/ApplicationSubmitted"));
 
 function App() {
   return (
@@ -39,11 +47,20 @@ function App() {
             <Route path="/set-password" element={<SetPasswordPage />} />
             <Route path="/ourteam" element={<OurTeam />} />
             <Route path="/career" element={<Career />} />
+            <Route path="/hire" element={<Hire />} />
+            <Route path="/hiring" element={<HiringProcess />} />
+            <Route
+              path="/applicationSubmitted"
+              element={<ApplicationReview />}
+            />
+            <Route path="/lookjobs" element={<LookJobs />} />
+            <Route path="/applicationform" element={<OpeningApplication />} />
+            <Route path="/submitted" element={<ApplicationSubmitted />} />
             <Route path="/company-dashboard" element={<CompanyDashboard />} />
             <Route
               path="/company-dashboard/your-hires"
               element={<YourHires />}
-            />{" "}
+            />
             <Route
               path="/company-dashboard/your-projects"
               element={<YourProjects />}

@@ -46,7 +46,7 @@ function Navbar() {
 
         <ul
           className={`flex flex-col items-center md:flex md:flex-row md:items-center  md:pb-0  ${textColor} pb-4 absolute md:static md:bg-transparent bg-[#041893] md:z-auto z-[-10] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-200 ease-in pt-3 md:pt-0 ${
-            open ? "top-[56px]" : "top-[-150px]"
+            open ? "top-[56px]" : "top-[-180px]"
           }`}
         >
           <li className="font-semibold p-1 md:p-1 pl-2 mr-7 rounded-sm">
@@ -57,6 +57,12 @@ function Navbar() {
           <li className="font-semibold p-1 pl-2 md:p-1 mr-7 rounded-sm">
             <NavLink to="/career" className={getLinkClass("/career")}>
               Career
+            </NavLink>
+          </li>
+          {/* <li>hello</li> */}
+          <li className="font-semibold p-1 pl-2 md:p-1 mr-7 rounded-sm">
+            <NavLink to="/hire" className={getLinkClass("/hire")}>
+             Hire
             </NavLink>
           </li>
           <li className="font-semibold p-1 pl-2 md:p-1 mr-7 rounded-sm">

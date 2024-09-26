@@ -24,7 +24,7 @@ const ForgotVerifyOtp: React.FC = () => {
     }
 
     try {
-      const verifyOtpUrl = `/api/auth/forgot-verify-otp`;
+      const verifyOtpUrl = `/api/user/forgot-verify-otp`;
       const response = await fetch(verifyOtpUrl, {
         method: "POST",
         headers: {
