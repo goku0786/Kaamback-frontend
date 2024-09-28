@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import Navbar from "../components/Navbar";
 
 // Define the expected shape of the OTP verification response
 interface VerifyOtpResponse {
@@ -10,10 +11,10 @@ interface VerifyOtpResponse {
 
 const ForgotVerifyOtp: React.FC = () => {
   const [otp, setOtp] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
+  // const [email, setEmail] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
-  const { handleOtpSuccessForForgotPassword } = useContext(AuthContext);
+  const { handleOtpSuccessForForgotPassword, email } = useContext(AuthContext);
   const navigate = useNavigate();
 
   // Async function to verify OTP
@@ -54,23 +55,13 @@ const ForgotVerifyOtp: React.FC = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-blue-500 to-cyan-500 h-[100vh] w-full flex justify-center items-center">
+    <div className="h-screen bg-gradient-to-r from-blue-500 to-cyan-500">
+     <Navbar/>
+    <div className="h-full w-full flex justify-center items-center">
       <div className="bg-white w-[280px] py-3 px-4 flex flex-col items-center rounded-xl">
         <h1 className="font-bold text-center mb-5">
           Forgot Password OTP Verification
         </h1>
-        <section className="flex flex-col w-full">
-          <label htmlFor="otp" className="font-semibold text-md">
-            Email Address
-          </label>
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
-            className="outline-none border-b-[2px] mt-1 mb-3 text-md rounded-md border-gray-300"
-          />
-        </section>
         <section className="flex flex-col w-full">
           <label htmlFor="otp" className="font-semibold text-md">
             Verify OTP
@@ -92,6 +83,7 @@ const ForgotVerifyOtp: React.FC = () => {
         {success && <p className="text-green-500">Verification Successful</p>}
         {error && <p className="text-red-500">{error}</p>}
       </div>
+    </div>
     </div>
   );
 };

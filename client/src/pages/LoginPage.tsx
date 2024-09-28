@@ -2,6 +2,7 @@ import React, { useState, FormEvent, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { AuthContext } from "../context/AuthContext";
+import   Navbar  from "../components/Navbar";
 
 // Define a type for the login response
 interface LoginResponse {
@@ -55,7 +56,9 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-blue-500 to-cyan-500 h-[100vh] w-full flex justify-center items-center">
+    <div className="h-screen bg-gradient-to-r from-blue-500 to-cyan-500">
+     <Navbar/>
+    <div className="w-full h-full flex justify-center items-center">
       <div className="bg-white w-[300px] py-3 px-4 flex flex-col items-center rounded-xl">
         <h1 className="text-black text-xl font-bold mb-4">Login</h1>
         <form onSubmit={login} className="flex flex-col w-full">
@@ -117,6 +120,7 @@ const LoginPage: React.FC = () => {
           )}
         </form>
       </div>
+    </div>
     </div>
   );
 };

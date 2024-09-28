@@ -33,8 +33,7 @@ export const AuthProvider = ({ children }) => {
 
   const handleOtpSuccessForForgotPassword = (userData) => {
     setIsVerifiedForOtp(false);
-    setUser(userData);
-    setEmail(null);
+    setEmail(userData.user.email);
   };
 
   // Function to handle login

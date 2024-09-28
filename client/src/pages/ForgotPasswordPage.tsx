@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import  Navbar  from "../components/Navbar";
 
 // Define the response structure from the forgot password API
 interface ForgotPasswordResponse {
@@ -56,7 +57,9 @@ const ForgotPasswordPage: React.FC = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-blue-500 to-cyan-500 h-[100vh] w-full flex justify-center items-center">
+   <div className="h-screen bg-gradient-to-r from-blue-500 to-cyan-500">
+    <Navbar/>
+    <div className="w-full h-full flex justify-center items-center">
       <div className="bg-white w-[280px] py-3 px-4 flex flex-col items-center rounded-xl">
         <h1 className="text-black text-xl font-bold mb-4">Forgot Password</h1>
         <form onSubmit={handleForgotPassword} className="flex flex-col w-full">
@@ -81,6 +84,7 @@ const ForgotPasswordPage: React.FC = () => {
           {message && <p className="text-green-500 text-center">{message}</p>}
         </form>
       </div>
+    </div>
     </div>
   );
 };
