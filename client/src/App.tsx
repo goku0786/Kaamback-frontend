@@ -24,7 +24,9 @@ const ApplicationReview = lazy(
 );
 const LookJobs = lazy(() => import("./pages/LookJobs"));
 const OpeningApplication = lazy(() => import("./pages/OpeningApplication"));
-const ApplicationSubmitted = lazy(() => import("./pages/ApplicationSubmitted"));
+const JobSeekerPage = lazy(() => import("./pages/JobSeeker/JobSeekerPage"));
+const ApplicationSubmitted = lazy(() => import("./pages/ApplicationSubmitted"))
+const JobSeekerDashboard = lazy(() => import("./pages/JobSeeker/JobSeekerDashboard"));
 
 function App() {
   return (
@@ -68,6 +70,13 @@ function App() {
             <Route path="/company-dashboard/profile" element={<Profile />} />
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/jobseeker" element={<JobSeekerPage />}>
+            <Route path="dashboard" element={<JobSeekerDashboard />} />
+            {/* <Route path="profile" element={<JobSeekerProfile />} /> */}
+            {/* <Route path="messages" element={<JobSeekerMessages />} /> */}
+            {/* <Route path="setting" element={<JobSeekerSetting />} /> */}
+            {/* <Route path="logout" element={<JobSeekerLogout />} /> */}
+          </Route>
           </Routes>
         </Suspense>
       </Router>
