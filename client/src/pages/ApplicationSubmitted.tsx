@@ -1,18 +1,15 @@
 import React from 'react';
+import Navbar from "../components/Navbar";
 // import JobOpening from "../components/Jobopening";
 
 
 const ApplicationSubmission: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-top mb-10">
+    <div className="h-screen bg-gray-100 flex flex-col items-center justify-top">
 
-      {/* Render the JobOpening component here */}
-      <div className="w-full ">
-        {/* <JobOpening userName="John Doe" /> */}
-      </div>
-      
+      <Navbar/>
 
-      <div className="bg-white shadow-md rounded-lg p-8 max-w-md text-center mt-20">
+      <div className="bg-white shadow-md rounded-lg p-8 max-w-md text-center mt-28">
         <div className="text-4xl mb-4 text-green-500">✔️</div>
         <h1 className="text-2xl font-bold mb-4">Application Submitted</h1>
         <p className="text-gray-700 mb-4">

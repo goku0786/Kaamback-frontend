@@ -6,8 +6,15 @@ import img3 from '../assets/careerLocation.png';
 import img4 from '../assets/careerWorkers.png';
 import img5 from '../assets/careerEducation.png';
 import img6 from '../assets/careerAward.png';
+import { useNavigate } from "react-router-dom";
 
 const Career = () => {
+ const navigate = useNavigate();
+
+const handleSubmit = ()=>{
+  navigate("/openings");
+}
+
   return (
     <div className="mx-auto bg-[#FFFDF3] w-full">
       <Navbar />
@@ -19,7 +26,7 @@ const Career = () => {
           <p className='font-normal tracking-wide text-base lg:text-lg'>
             Work at the most dynamic and successful agency! At Kaamback, we are dedicated to delivering top-notch digital solutions to a diverse range of clients by blending creativity with functionality.
           </p>
-          <button className="px-6 py-4 bg-gradient-to-r from-[#0177ED] to-[#5DC2EA] w-48 lg:w-60 rounded-full text-lg lg:text-xl text-white font-semibold mt-8 lg:mt-16">
+          <button onClick={handleSubmit} className="px-6 py-4 bg-gradient-to-r from-[#0177ED] to-[#5DC2EA] w-48 lg:w-60 rounded-full text-lg lg:text-xl text-white font-semibold mt-8 lg:mt-16">
             View Openings
           </button>
         </div>

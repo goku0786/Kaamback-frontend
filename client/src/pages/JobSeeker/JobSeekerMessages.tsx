@@ -10,9 +10,9 @@ const JobSeekerMessages: React.FC = () => {
   return (
     <div className="p-5 flex gap-5 h-full overflow-hidden">
       <div className="flex flex-col gap-5 w-3/6">
-        <div className="flex bg-white items-center p-2 shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] gap-2 rounded-lg w-full">
-          <FiSearch className="text-2xl cursor-pointer" />
-          <input type="text" placeholder="Search here..." className="rounded-lg  w-full bg-transparen" />
+        <div className="flex bg-white items-center rounded-lg w-full">
+          <FiSearch className="text-5xl cursor-pointer shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] h-full rounded-l-lg px-2 " />
+          <input type="text" placeholder="Search here..." className="rounded-r-lg border-none  w-full shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]" />
         </div>
         <div className="p-3 shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px] bg-white rounded-lg flex flex-col gap-4">
           <h3 className="text-lg font-semibold">Groups</h3>

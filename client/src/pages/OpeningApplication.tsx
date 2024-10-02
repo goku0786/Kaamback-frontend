@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 // import JobOpening from "../components/Jobopening"; // Import the JobOpening component
 import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+import Navbar from "../components/Navbar";
 
 const ApplicationForm: React.FC = () => {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -36,11 +37,13 @@ const ApplicationForm: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f0f0ff] text-[#041893]">
+    <div className="flex flex-col bg-[#f0f0ff] text-[#041893] pb-5">
       {/* Use JobOpening component */}
       {/* <JobOpening userName="John Doe" /> */}
 
-      <div className="flex-grow flex items-center justify-center">
+      <Navbar/>
+
+      <div className="flex-grow flex items-center justify-center mt-20 ">
         <form
           onSubmit={handleSubmit}
           className="bg-white p-10 rounded-lg shadow-lg w-full max-w-2xl space-y-6"

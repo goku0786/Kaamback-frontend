@@ -1,6 +1,7 @@
 // import JobOpening from "../components/Jobopening";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 interface User {
   name: string;
@@ -37,11 +38,13 @@ const Openings = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#041893] text-white flex flex-col">
+    <div className="min-h-screen  bg-[#EAEBFF] flex flex-col pb-10">
       {/* JobOpening Component - Passing user data */}
       {/* <JobOpening userName={user ? user.name : 'Guest'} /> */}
+      <Navbar/>
 
-      <div className="container mx-auto lg:px-24 mt-6 lg:mt-16 flex-grow">
+      <div className="container px-5 mx-auto lg:px-24 mt-24 lg:mt-16 flex-grow
+      ">
         {/* Title */}
         <h2 className="text-4xl lg:text-5xl font-bold text-center mb-6">
           Explore Open Positions
@@ -70,7 +73,7 @@ const Openings = () => {
       </div>
 
       {/* Extra space for background below the cards */}
-      <div className="bg-[#041893] h-32"></div>
+      {/* <div className="bg-[#041893] h-32"></div> */}
     </div>
   );
 };
