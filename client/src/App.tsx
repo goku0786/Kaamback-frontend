@@ -79,7 +79,7 @@ function App() {
 
             {/* Hiring route */}
             <Route path="/hiring" element={<HiringProcess />}>
-              <Route path="getDetails" element={<GettingStarted />} />
+              <Route path="gettingStarted" element={<GettingStarted />} />
               <Route
                 path="professionalExperience"
                 element={<ProfessionalExperience />}

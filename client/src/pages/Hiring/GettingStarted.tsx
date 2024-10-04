@@ -1,7 +1,14 @@
 import React from "react";
 import RadioButtons from "./LanguageChooseButton";
+import { useNavigate } from "react-router-dom";
 
 const GettingStarted: React.FC = () => {
+  const navigate = useNavigate();
+  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    navigate("/hiring/professionalExperience");
+  };
+
   return (
     <div>
       <h2 className="text-xl font-bold">
@@ -101,9 +108,16 @@ const GettingStarted: React.FC = () => {
         </div>
       </div>
       <RadioButtons />
+      <div>
+        <button
+          onClick={handleSubmit}
+          className="px-16 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold text-xl rounded-full"
+        >
+          Continue
+        </button>
+      </div>
     </div>
   );
 };
 
 export default GettingStarted;
-

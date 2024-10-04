@@ -1,23 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaCheck } from "react-icons/fa"; // Importing the check mark icon
 import topClient from "../../assets/top-clients.jpg";
 import flexibleWork from "../../assets/flexible-work.jpg";
 import financialStability from "../../assets/financial-stability.jpg";
 import Navbar from "../../components/Navbar";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 const HiringProcess: React.FC = () => {
-  // Defining the type of currentStep as number
+  const location = useLocation();
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const navigate = useNavigate();
 
-  const nextStep = (): void => {
-    setCurrentStep((prevStep) => prevStep + 1);
-  };
-
-  const prevStep = (): void => {
-    setCurrentStep((prevStep) => prevStep - 1);
-  };
+  // Set currentStep based on the path
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/hiring/gettingStarted":
+        setCurrentStep(1);
+        break;
+      case "/hiring/professionalExperience":
+        setCurrentStep(2);
+        break;
+      case "/hiring/profileSetup":
+        setCurrentStep(3);
+        break;
+      default:
+        setCurrentStep(1);
+    }
+  }, [location.pathname]);
 
   // Function to render step indicators
   const renderStepIndicator = (stepNumber: number): JSX.Element => {
@@ -34,11 +42,6 @@ const HiringProcess: React.FC = () => {
         <div className="h-10 w-10 border border-gray-500 rounded-full"></div>
       );
     }
-  };
-
-  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    navigate("/hiring/applicationSubmitted");
   };
 
   return (
@@ -66,36 +69,6 @@ const HiringProcess: React.FC = () => {
 
           <div className="px-10 pt-5">
             <Outlet />
-          </div>
-
-          {/* Navigation buttons */}
-          <div className="px-10 flex gap-5">
-            {currentStep > 1 && (
-              <button
-                onClick={prevStep}
-                className="text-white px-5 pb-1 bg-gray-700 font-semibold text-3xl rounded-full"
-              >
-                &larr;
-              </button>
-            )}
-
-            {currentStep < 3 && (
-              <button
-                onClick={nextStep}
-                className="px-16 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold text-xl rounded-full"
-              >
-                Continue
-              </button>
-            )}
-
-            {currentStep === 3 && (
-              <button
-                onClick={handleSubmit}
-                className="px-16 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold text-xl rounded-full"
-              >
-                Finish
-              </button>
-            )}
           </div>
         </div>
 

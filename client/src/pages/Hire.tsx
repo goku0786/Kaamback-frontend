@@ -162,10 +162,6 @@ import {Link, useNavigate} from 'react-router-dom';
 // import img1 from '../assets/img1.png';
 // import { Link } from 'react-router-dom';
 
-
-
-
-
 const HeroSection: React.FC = () => {
 
  const navigate = useNavigate();
@@ -173,7 +169,7 @@ const HeroSection: React.FC = () => {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        navigate("/hiring/getDetails");  
+        navigate("/hiring/gettingStarted");  
       };
 
   return (
