@@ -9,6 +9,19 @@ export const AuthProvider = ({ children }) => {
   const [email, setEmail] = useState(null);
   const [redirectPath, setRedirectPath] = useState("/");
   const [user, setUser] = useState(null);
+  const [freelancerDetails, setFreelancerDetails] = useState({
+    fullName: '',
+    country: '',
+    city: '',
+    englishProficiency: '',
+    professionalExperience: 0,
+    primaryJob: '',
+    primaryJobExperience: 0,
+    worked: '',
+    skills: [],
+    profilePhoto: null,
+    resume: null,
+  });
 
   // Function to handle signup success
   const handleSignupSuccess = (userEmail) => {
@@ -69,6 +82,8 @@ export const AuthProvider = ({ children }) => {
         handleOtpSuccessForForgotPassword,
         loginuser, 
         logout,
+        freelancerDetails,
+        setFreelancerDetails
       }}
     >
       {children}
