@@ -1,17 +1,164 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+
+// Popup confirmation component
+const ConfirmationPopup: React.FC<{
+  onConfirm: () => void;
+  onCancel: () => void;
+}> = ({ onConfirm, onCancel }) => {
+  return (
+    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+      <div className="bg-white p-5 rounded-lg shadow-lg text-center">
+        <h2 className="text-lg font-bold mb-4">
+          Are you sure you want to submit the application?
+        </h2>
+        <div className="flex justify-center gap-4">
+          <button
+            onClick={onConfirm}
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+          >
+            Yes, Submit
+          </button>
+          <button
+            onClick={onCancel}
+            className="px-4 py-2 bg-gray-400 text-white rounded-lg"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const ProfileSetup: React.FC = () => {
   const navigate = useNavigate();
+  const { setFreelancerDetails } = useContext(AuthContext);
+  const { freelancerDetails } = useContext(AuthContext);
 
-  const prevStep = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    navigate("/hiring/professionalExperience");
+  // Form state
+  const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
+  const [resume, setResume] = useState<File | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [showPopup, setShowPopup] = useState(false); // State to control popup
+
+  // Handle profile photo change
+  const handleProfilePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (!["image/jpeg", "image/png"].includes(file.type)) {
+        setErrorMessage(
+          "Only JPG or PNG formats are allowed for profile photo."
+        );
+        return;
+      }
+      if (file.size > 2 * 1024 * 1024) {
+        // 2MB limit
+        setErrorMessage("Profile photo must be smaller than 2MB.");
+        return;
+      }
+      setErrorMessage("");
+      setProfilePhoto(file);
+    }
   };
 
-  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    navigate("/hiring/applicationSubmitted");
+  // Handle resume change
+  const handleResumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.type !== "application/pdf") {
+        setErrorMessage("Only PDF format is allowed for the resume.");
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        // 5MB limit
+        setErrorMessage("Resume must be smaller than 5MB.");
+        return;
+      }
+      setErrorMessage("");
+      setResume(file);
+    }
+  };
+
+  // Handle form submission with confirmation
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    // Validation check
+    if (!profilePhoto || !resume) {
+      setErrorMessage("Please upload both profile photo and resume.");
+      return;
+    }
+
+    // Set freelancer details context
+    setFreelancerDetails((prev: any) => ({
+      ...prev,
+      profilePhoto,
+      resume,
+    }));
+
+    // Show the confirmation popup
+    setShowPopup(true);
+  };
+
+  // Function to handle form submission (only called if user confirms)
+  const confirmSubmission = async () => {
+    setShowPopup(false); // Close the popup
+
+    const item = {
+      fullName: freelancerDetails.fullName,
+      // birthDate:freelancerDetails.birthDate,
+      // email:freelancerDetails.email,
+      // phoneNumber:freelancerDetails.phoneNumber,
+      country: freelancerDetails.country,
+      city: freelancerDetails.city,
+      englishProficiency: freelancerDetails.englishProficiency,
+      professionalExperience: freelancerDetails.professionalExperience,
+      primaryJob: freelancerDetails.primaryJob,
+      primaryJobExperience: freelancerDetails.primaryJobExperience,
+      worked: freelancerDetails.worked,
+      skills: freelancerDetails.skills,
+      // linkedIn:freelancerDetails.linkedIn,
+      profile: freelancerDetails.profilePhoto,
+      resume: freelancerDetails.resume,
+    };
+
+    console.log("details from profilesetUp of item object", item);
+
+    try {
+      const requestOptions: RequestInit = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(item),
+        credentials: "include",
+      };
+
+      const response = await fetch(
+        "api/freelancer/set-freelancer",
+        requestOptions
+      );
+
+      const result = await response.json();
+      console.log(result);
+
+      if (result.success) {
+        console.log(result.message);
+        // navigate("/hiring/applicationSubmitted");
+      } else {
+        setErrorMessage("Failed to submit freelancer details.");
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage("Error occurred while submitting freelancer details.");
+    }
+  };
+
+  // Navigate to the previous page
+  const prevStep = () => {
+    navigate("/hiring/professionalExperience");
   };
 
   return (
@@ -24,21 +171,27 @@ const ProfileSetup: React.FC = () => {
         Kaamback clients.
       </p>
 
+      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+
       <div className="flex mt-7 gap-10">
         <div className="h-[250px] w-[250px] bg-gray-300 flex flex-col justify-center items-center rounded-3xl">
           <div className="h-[80px] w-[80px] border-4 border-black rounded-full"></div>
           <div className="h-[100px] w-[200px] border-4 border-b-0 border-black rounded-t-full"></div>
         </div>
-        {/* <img src="..." alt="" /> */}
+
         <div className="flex flex-col gap-5">
-          <p className="font-semibold mt-5">
-            JPG / PNG file
-            <br />
-            Minimum resolution: 380x380px
-            <br />
-            Maximum file size: 10 MB
-          </p>
-          <input type="file" className="cursor-pointer" />
+          <span className="flex flex-col gap-1 w-[250px]">
+            <label htmlFor="profilePhoto" className="font-semibold">
+              Profile Photo (JPG or PNG, Max 2MB)
+            </label>
+            <input
+              type="file"
+              id="profilePhoto"
+              accept="image/jpeg, image/png"
+              onChange={handleProfilePhotoChange}
+              className="outline-none border-2 border-black  rounded-md"
+            />
+          </span>
         </div>
       </div>
 
@@ -46,14 +199,22 @@ const ProfileSetup: React.FC = () => {
       <p>Please upload your resume</p>
 
       <div className="mt-2 mb-5 flex">
-        <input type="file" className="cursor-pointer" />
-        <span className="font-semibold ml-3">
-          <p>PDF file</p>
-          <p>Maximum file size: 5MB</p>
+        <span className="flex flex-col gap-1 w-[250px]">
+          <label htmlFor="resume" className="font-semibold">
+            Resume (PDF, Max 5MB)
+          </label>
+          <input
+            type="file"
+            id="resume"
+            accept="application/pdf"
+            onChange={handleResumeChange}
+            className="outline-none border-2 border-black rounded-md"
+          />
         </span>
       </div>
+
       <div className="flex gap-5">
-      <button
+        <button
           onClick={prevStep}
           className="text-white px-5 pb-1 bg-gray-700 font-semibold text-3xl rounded-full"
         >
@@ -63,9 +224,17 @@ const ProfileSetup: React.FC = () => {
           onClick={handleSubmit}
           className="px-16 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold text-xl rounded-full"
         >
-          Continue
+          Submit
         </button>
       </div>
+
+      {/* Show the confirmation popup if showPopup is true */}
+      {showPopup && (
+        <ConfirmationPopup
+          onConfirm={confirmSubmission}
+          onCancel={() => setShowPopup(false)}
+        />
+      )}
     </div>
   );
 };

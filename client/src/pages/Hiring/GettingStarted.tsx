@@ -1,142 +1,11 @@
-// import React, { useContext } from "react";
-// import RadioButtons from "./LanguageChooseButton";
-// import { useNavigate } from "react-router-dom";
-// import { AuthContext } from "../../context/AuthContext";
-
-// const GettingStarted: React.FC = () => {
-//   const navigate = useNavigate();
-//   const { setFreelancerDetails } = useContext(AuthContext);
-//   const [fullName, setFullName] = React.useState("");
-
-//   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
-//     event.preventDefault();
-//     setFreelancerDetails((prev: any) => ({ ...prev, fullName }));
-//     navigate("/hiring/professionalExperience");
-//   };
-
-//   return (
-//     <div>
-//       <h2 className="text-xl font-bold">
-//         Welcome to KaamBack. Let's get started!
-//       </h2>
-//       <p className="text-gray-600">
-//         Your application should only take a few minutes. Based on the
-//         information you provide, our screening team will determine the best path
-//         for you going forward.
-//       </p>
-//       <div className="flex flex-col gap-5 mt-5">
-//         {/* <div className="flex gap-7"> */}
-//         <span className="flex flex-col gap-1 w-[250px]">
-//           <label htmlFor="userName" className="font-semibold">
-//             Fullname
-//           </label>
-//           <input
-//             type="text"
-//             id="fullname"
-//             value={fullName}
-//             onChange={(e) => setFullName(e.target.value)}
-//             className="outline-none border-2 border-black p-1 rounded-md"
-//           />
-//         </span>
-//         {/* <span className="flex flex-col gap-1 w-[250px]">
-//             <label htmlFor="middleName" className="font-semibold">
-//               Middle name
-//             </label>
-//             <input
-//               type="text"
-//               id="middleName"
-//               className="outline-none border-2 border-black p-1 rounded-md"
-//             />
-//           </span> */}
-//         {/* <span className="flex flex-col gap-1 w-[250px]">
-//             <label htmlFor="lastName" className="font-semibold">
-//               Last name
-//             </label>
-//             <input
-//               type="text"
-//               id="lastName"
-//               className="outline-none border-2 border-black p-1 rounded-md"
-//             />
-//           </span> */}
-//         {/* </div> */}
-//         <span className="flex flex-col gap-1 w-[250px]">
-//           <label htmlFor="birthDate" className="font-semibold">
-//             Birth Date
-//           </label>
-//           <input
-//             type="date"
-//             id="birthDate"
-//             className="outline-none border-2 border-black p-1 rounded-md"
-//           />
-//         </span>
-//         <div className="flex gap-7">
-//           <span className="flex flex-col gap-1 w-[250px]">
-//             <label htmlFor="email" className="font-semibold">
-//               Email Address
-//             </label>
-//             <input
-//               type="email"
-//               id="email"
-//               className="outline-none border-2 border-black p-1 rounded-md"
-//             />
-//           </span>
-//           <span className="flex flex-col gap-1 w-[250px]">
-//             <label htmlFor="phoneNumber" className="font-semibold">
-//               Phone Number
-//             </label>
-//             <input
-//               type="number"
-//               id="phoneNumber"
-//               className="outline-none border-2 border-black p-1 rounded-md"
-//             />
-//           </span>
-//         </div>
-//         <div className="flex gap-7">
-//           <span className="flex flex-col gap-1 w-[250px]">
-//             <label htmlFor="country" className="font-semibold">
-//               Country
-//             </label>
-//             <input
-//               type="text"
-//               id="country"
-//               className="outline-none border-2 border-black p-1 rounded-md"
-//             />
-//           </span>
-//           <span className="flex flex-col gap-1 w-[250px]">
-//             <label htmlFor="city" className="font-semibold">
-//               City
-//             </label>
-//             <input
-//               type="text"
-//               id="city"
-//               className="outline-none border-2 border-black p-1 rounded-md"
-//             />
-//           </span>
-//         </div>
-//       </div>
-//       <RadioButtons />
-//       <div>
-//         <button
-//           onClick={handleSubmit}
-//           className="px-16 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold text-xl rounded-full"
-//         >
-//           Continue
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default GettingStarted;
-
-import React, { useContext } from "react";
-import RadioButtons from "./LanguageChooseButton";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
 const GettingStarted: React.FC = () => {
   const navigate = useNavigate();
   const { setFreelancerDetails } = useContext(AuthContext);
+  const [englishProficiency, setEnglishProficiency] = useState<string>("");
   const [formData, setFormData] = React.useState({
     fullName: "",
     birthDate: "",
@@ -144,7 +13,6 @@ const GettingStarted: React.FC = () => {
     phoneNumber: "",
     country: "",
     city: "",
-    // englishProficiency:""
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -156,7 +24,14 @@ const GettingStarted: React.FC = () => {
     event.preventDefault();
     // Add form validation here if needed
     setFreelancerDetails((prev: any) => ({ ...prev, ...formData }));
+    setFreelancerDetails((prev: any) => ({ ...prev, englishProficiency }));
     navigate("/hiring/professionalExperience");
+  };
+
+  const handleOptionChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    setEnglishProficiency(event.target.value);
   };
 
   return (
@@ -247,7 +122,71 @@ const GettingStarted: React.FC = () => {
           </span>
         </div>
       </div>
-      <RadioButtons />
+      {/* <RadioButtons /> */}
+      <div className="my-5">
+        <p className="text-lg font-semibold mb-2">English Proficiency</p>
+
+        <div className="flex gap-5">
+          <span className="flex items-center">
+            <input
+              type="radio"
+              id="native"
+              name="proficiency"
+              value="Native/Fluent"
+              checked={englishProficiency === "Native/Fluent"}
+              onChange={handleOptionChange}
+              className="form-radio h-4 w-4 text-blue-600"
+            />
+            <label htmlFor="native" className="ml-2">
+              Native/Fluent
+            </label>
+          </span>
+          <span className="flex items-center">
+            <input
+              type="radio"
+              id="advanced"
+              name="proficiency"
+              value="Advanced"
+              checked={englishProficiency === "Advanced"}
+              onChange={handleOptionChange}
+              className="form-radio h-4 w-4 text-blue-600"
+            />
+            <label htmlFor="advanced" className="ml-2">
+              Advanced
+            </label>
+          </span>
+
+          <span className="flex items-center">
+            <input
+              type="radio"
+              id="intermediate"
+              name="proficiency"
+              value="Intermediate"
+              checked={englishProficiency === "Intermediate"}
+              onChange={handleOptionChange}
+              className="form-radio h-4 w-4 text-blue-600"
+            />
+            <label htmlFor="intermediate" className="ml-2">
+              Intermediate
+            </label>
+          </span>
+
+          <span className="flex items-center">
+            <input
+              type="radio"
+              id="basic"
+              name="proficiency"
+              value="Basic"
+              checked={englishProficiency === "Basic"}
+              onChange={handleOptionChange}
+              className="form-radio h-4 w-4 text-blue-600"
+            />
+            <label htmlFor="basic" className="ml-2">
+              Basic
+            </label>
+          </span>
+        </div>
+      </div>
       <div>
         <button
           onClick={handleSubmit}

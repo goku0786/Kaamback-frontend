@@ -10,7 +10,10 @@ export const AuthProvider = ({ children }) => {
   const [redirectPath, setRedirectPath] = useState("/");
   const [user, setUser] = useState(null);
   const [freelancerDetails, setFreelancerDetails] = useState({
-    fullName: '',
+    fullName: '', 
+    birthDate: '',
+    email: '',
+    phoneNumber: '',
     country: '',
     city: '',
     englishProficiency: '',
@@ -19,6 +22,7 @@ export const AuthProvider = ({ children }) => {
     primaryJobExperience: 0,
     worked: '',
     skills: [],
+    linkedIn:'',
     profilePhoto: null,
     resume: null,
   });

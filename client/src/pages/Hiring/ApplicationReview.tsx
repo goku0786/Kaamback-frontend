@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
 import Navbar from "../../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 const ApplicationReview: React.FC = () => {
   const navigate = useNavigate();
+  const { freelancerDetails } = useContext(AuthContext);
 
+  console.log("details from hiring application submitted ", freelancerDetails);
+
+  // Get current date
+  const currentDate = new Date();
+  // Format the current date in "Month Day, Year" format
+  const formattedCurrentDate = currentDate.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  // Calculate next day's date
+  const nextDayDate = new Date(currentDate);
+  nextDayDate.setDate(currentDate.getDate() + 1);
+  const formattedNextDayDate = nextDayDate.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
+  // Handle button click to navigate to job listings
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     navigate("/lookjobs");
@@ -23,8 +46,8 @@ const ApplicationReview: React.FC = () => {
           <div className="w-[70%] bg-blue-100 mt-10 p-10 rounded-lg">
             Will be reviewed before:
             <br />
-            <p className="text-lg my-1">August 7th</p>
-            Date of Submission: August 06, 2024
+            <p className="text-lg my-1">{formattedNextDayDate}</p>
+            Date of Submission: {formattedCurrentDate}
           </div>
           <button
             onClick={handleSubmit}

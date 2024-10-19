@@ -72,7 +72,7 @@ const HiringProcess: React.FC = () => {
           </div>
         </div>
 
-        <div className="border-l-2 border-gray-500 px-10 pt-7 flex flex-col gap-5 h-full w-[25%]">
+        <div className="border-l-2 border-gray-500 px-10 pt-7 flex flex-col gap-5 min-h-screen w-[25%]">
           <div className="flex flex-col gap-2">
             <img src={topClient} alt="Top Clients" className="w-16" />
             <p className="font-bold">Top Clients</p>
