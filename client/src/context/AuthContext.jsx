@@ -10,21 +10,21 @@ export const AuthProvider = ({ children }) => {
   const [redirectPath, setRedirectPath] = useState("/");
   const [user, setUser] = useState(null);
   const [freelancerDetails, setFreelancerDetails] = useState({
-    fullName: '', 
-    birthDate: '',
-    email: '',
-    phoneNumber: '',
-    country: '',
-    city: '',
-    englishProficiency: '',
+    fullName: "",
+    birthDate: "",
+    email: "",
+    phoneNumber: "",
+    country: "",
+    city: "",
+    englishProficiency: "",
     professionalExperience: 0,
-    primaryJob: '',
+    primaryJob: "",
     primaryJobExperience: 0,
-    worked: '',
+    worked: "",
     skills: [],
-    linkedIn:'',
-    profilePhoto: null,
-    resume: null,
+    linkedIn: "",
+    profilePhoto: File | null,
+    resume: File | null,
   });
 
   // Function to handle signup success
@@ -55,17 +55,16 @@ export const AuthProvider = ({ children }) => {
 
   // Function to handle login
   const loginuser = (userData) => {
-    setUser(userData); 
-    localStorage.setItem("user", JSON.stringify(userData)); 
+    setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
   };
 
   // Function to handle logout
   const logout = () => {
     setUser(null); // Clear user data
-    localStorage.removeItem("user"); 
+    localStorage.removeItem("user");
   };
 
-  
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -79,15 +78,15 @@ export const AuthProvider = ({ children }) => {
         isVerifiedForOtp,
         email,
         redirectPath,
-        user, 
+        user,
         handleSignupSuccess,
         handleForgotPasswordSuccess,
         handleOtpSuccess,
         handleOtpSuccessForForgotPassword,
-        loginuser, 
+        loginuser,
         logout,
         freelancerDetails,
-        setFreelancerDetails
+        setFreelancerDetails,
       }}
     >
       {children}

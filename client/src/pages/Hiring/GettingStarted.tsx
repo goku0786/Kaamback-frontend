@@ -31,7 +31,7 @@ const GettingStarted: React.FC = () => {
   const handleOptionChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    setEnglishProficiency(event.target.value);
+    setEnglishProficiency(event.target.value.toLowerCase());
   };
 
   return (
@@ -133,7 +133,7 @@ const GettingStarted: React.FC = () => {
               id="native"
               name="proficiency"
               value="Native/Fluent"
-              checked={englishProficiency === "Native/Fluent"}
+              checked={englishProficiency === "native/fluent"}
               onChange={handleOptionChange}
               className="form-radio h-4 w-4 text-blue-600"
             />
@@ -147,7 +147,7 @@ const GettingStarted: React.FC = () => {
               id="advanced"
               name="proficiency"
               value="Advanced"
-              checked={englishProficiency === "Advanced"}
+              checked={englishProficiency === "advanced"}
               onChange={handleOptionChange}
               className="form-radio h-4 w-4 text-blue-600"
             />
@@ -162,7 +162,7 @@ const GettingStarted: React.FC = () => {
               id="intermediate"
               name="proficiency"
               value="Intermediate"
-              checked={englishProficiency === "Intermediate"}
+              checked={englishProficiency === "intermediate"}
               onChange={handleOptionChange}
               className="form-radio h-4 w-4 text-blue-600"
             />
@@ -177,7 +177,7 @@ const GettingStarted: React.FC = () => {
               id="basic"
               name="proficiency"
               value="Basic"
-              checked={englishProficiency === "Basic"}
+              checked={englishProficiency === "basic"}
               onChange={handleOptionChange}
               className="form-radio h-4 w-4 text-blue-600"
             />

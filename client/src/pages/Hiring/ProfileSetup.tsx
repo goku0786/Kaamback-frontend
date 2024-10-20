@@ -86,10 +86,10 @@ const ProfileSetup: React.FC = () => {
     e.preventDefault();
 
     // Validation check
-    if (!profilePhoto || !resume) {
-      setErrorMessage("Please upload both profile photo and resume.");
-      return;
-    }
+    // if (!profilePhoto || !resume) {
+    //   setErrorMessage("Please upload both profile photo and resume.");
+    //   return;
+    // }
 
     // Set freelancer details context
     setFreelancerDetails((prev: any) => ({
@@ -102,42 +102,41 @@ const ProfileSetup: React.FC = () => {
     setShowPopup(true);
   };
 
-  // Function to handle form submission (only called if user confirms)
   const confirmSubmission = async () => {
     setShowPopup(false); // Close the popup
 
-    const item = {
-      fullName: freelancerDetails.fullName,
-      // birthDate:freelancerDetails.birthDate,
-      // email:freelancerDetails.email,
-      // phoneNumber:freelancerDetails.phoneNumber,
-      country: freelancerDetails.country,
-      city: freelancerDetails.city,
-      englishProficiency: freelancerDetails.englishProficiency,
-      professionalExperience: freelancerDetails.professionalExperience,
-      primaryJob: freelancerDetails.primaryJob,
-      primaryJobExperience: freelancerDetails.primaryJobExperience,
-      worked: freelancerDetails.worked,
-      skills: freelancerDetails.skills,
-      // linkedIn:freelancerDetails.linkedIn,
-      profile: freelancerDetails.profilePhoto,
-      resume: freelancerDetails.resume,
-    };
+    console.log("Selected Profile Photo:", freelancerDetails.profilePhoto);
+    console.log("Selected Resume:", freelancerDetails.resume);
+    console.log("here is freelancer details", freelancerDetails);
 
-    console.log("details from profilesetUp of item object", item);
+    const formData = new FormData();
+    formData.append("fullName", freelancerDetails.fullName);
+    formData.append("country", freelancerDetails.country);
+    formData.append("city", freelancerDetails.city);
+    formData.append("englishProficiency", freelancerDetails.englishProficiency);
+    formData.append(
+      "professionalExperience",
+      freelancerDetails.professionalExperience
+    );
+    formData.append("primaryJob", freelancerDetails.primaryJob);
+    formData.append(
+      "primaryJobExperience",
+      freelancerDetails.primaryJobExperience
+    );
+    formData.append("worked", freelancerDetails.worked);
+    formData.append("skills", JSON.stringify(freelancerDetails.skills));
+    formData.append("profile", freelancerDetails.profilePhoto);
+    formData.append("resume", freelancerDetails.resume);
 
     try {
       const requestOptions: RequestInit = {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(item),
+        body: formData,
         credentials: "include",
       };
 
       const response = await fetch(
-        "api/freelancer/set-freelancer",
+        "/api/freelancer/set-freelancer",
         requestOptions
       );
 
@@ -146,7 +145,7 @@ const ProfileSetup: React.FC = () => {
 
       if (result.success) {
         console.log(result.message);
-        // navigate("/hiring/applicationSubmitted");
+        navigate("/hiring/applicationSubmitted");
       } else {
         setErrorMessage("Failed to submit freelancer details.");
       }
@@ -187,7 +186,7 @@ const ProfileSetup: React.FC = () => {
             <input
               type="file"
               id="profilePhoto"
-              accept="image/jpeg, image/png"
+              accept="image/*"
               onChange={handleProfilePhotoChange}
               className="outline-none border-2 border-black  rounded-md"
             />

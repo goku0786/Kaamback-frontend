@@ -19,7 +19,7 @@ const ProfessionalExperience: React.FC = () => {
   const handleOptionChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    setWorked(event.target.value);
+    setWorked(event.target.value.toLowerCase());
   };
 
   const prevStep = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -114,7 +114,7 @@ const ProfessionalExperience: React.FC = () => {
           id="yes"
           name="work"
           value="Yes"
-          checked={worked === "Yes"}
+          checked={worked === "yes"}
           onChange={handleOptionChange}
           className="form-radio h-4 w-4 text-blue-600"
         />
@@ -129,7 +129,7 @@ const ProfessionalExperience: React.FC = () => {
           id="no"
           name="work"
           value="No"
-          checked={worked === "No"}
+          checked={worked === "no"}
           onChange={handleOptionChange}
           className="form-radio h-4 w-4 text-blue-600"
         />
