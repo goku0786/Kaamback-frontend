@@ -18,14 +18,35 @@ const CompanyDashboard = lazy(() => import("./pages/CompanyDashboard"));
 // const Profile = lazy(() => import("./pages/Profile"));
 const YourProjects = lazy(() => import("./components/YourProjects"));
 const ForgotVerifyOtpPage = lazy(() => import("./pages/ForgotVerifyOtp"));
-const HiringProcess = lazy(() => import("./pages/Hiring/HiringProcess"));
-const GettingStarted = lazy(() => import("./pages/Hiring/GettingStarted"));
-const ProfessionalExperience = lazy(
-  () => import("./pages/Hiring/ProfessionalExperience")
+const HiringProcessFreelancer = lazy(
+  () => import("./pages/HiringFreelancer/HiringProcess")
 );
-const ProfileSetup = lazy(() => import("./pages/Hiring/ProfileSetup"));
+const HiringProcessCompany = lazy(
+  () => import("./pages/HiringCompany/HiringProcess")
+);
+const GettingStarted = lazy(
+  () => import("./pages/HiringFreelancer/GettingStarted")
+);
+const ProfessionalExperience = lazy(
+  () => import("./pages/HiringFreelancer/ProfessionalExperience")
+);
+const ProfileSetup = lazy(
+  () => import("./pages/HiringFreelancer/ProfileSetup")
+);
 const ApplicationReview = lazy(
-  () => import("./pages/Hiring/ApplicationReview")
+  () => import("./pages/HiringFreelancer/ApplicationReview")
+);
+const GettingStartedCompany = lazy(
+  () => import("./pages/HiringCompany/GettingStarted")
+);
+const ProfessionalExperienceCompany = lazy(
+  () => import("./pages/HiringCompany/ProfessionalExperience")
+);
+const ProfileSetupCompany = lazy(
+  () => import("./pages/HiringCompany/ProfileSetup")
+);
+const ApplicationReviewCompany = lazy(
+  () => import("./pages/HiringCompany/ApplicationReview")
 );
 const JobPage = lazy(() => import("./pages/LookJobs"));
 const ApplicationForm = lazy(() => import("./pages/OpeningApplication"));
@@ -78,7 +99,10 @@ function App() {
             <Route path="/career" element={<Career />} />
 
             {/* Hiring route */}
-            <Route path="/hiring" element={<HiringProcess />}>
+            <Route
+              path="/hiring/set-freelancer"
+              element={<HiringProcessFreelancer />}
+            >
               <Route path="gettingStarted" element={<GettingStarted />} />
               <Route
                 path="professionalExperience"
@@ -87,8 +111,28 @@ function App() {
               <Route path="profileSetup" element={<ProfileSetup />} />
             </Route>
             <Route
-              path="/hiring/applicationSubmitted"
+              path="/hiring/set-freelancer/applicationSubmitted"
               element={<ApplicationReview />}
+            />
+
+            {/* Hiring company route */}
+            <Route
+              path="/hiring/set-company"
+              element={<HiringProcessCompany />}
+            >
+              <Route
+                path="gettingStarted"
+                element={<GettingStartedCompany />}
+              />
+              <Route
+                path="professionalExperience"
+                element={<ProfessionalExperienceCompany />}
+              />
+              <Route path="profileSetup" element={<ProfileSetupCompany />} />
+            </Route>
+            <Route
+              path="/hiring/set-company/applicationSubmitted"
+              element={<ApplicationReviewCompany />}
             />
 
             {/* Company Routes */}

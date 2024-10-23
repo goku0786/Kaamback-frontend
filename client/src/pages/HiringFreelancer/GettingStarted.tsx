@@ -25,7 +25,7 @@ const GettingStarted: React.FC = () => {
     // Add form validation here if needed
     setFreelancerDetails((prev: any) => ({ ...prev, ...formData }));
     setFreelancerDetails((prev: any) => ({ ...prev, englishProficiency }));
-    navigate("/hiring/professionalExperience");
+    navigate("/hiring/set-freelancer/professionalExperience");
   };
 
   const handleOptionChange = (

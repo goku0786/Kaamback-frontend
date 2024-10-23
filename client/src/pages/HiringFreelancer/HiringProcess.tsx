@@ -13,13 +13,13 @@ const HiringProcess: React.FC = () => {
   // Set currentStep based on the path
   useEffect(() => {
     switch (location.pathname) {
-      case "/hiring/gettingStarted":
+      case "/hiring/set-freelancergettingStarted":
         setCurrentStep(1);
         break;
-      case "/hiring/professionalExperience":
+      case "/hiring/set-freelancer/professionalExperience":
         setCurrentStep(2);
         break;
-      case "/hiring/profileSetup":
+      case "/hiring/set-freelancer/profileSetup":
         setCurrentStep(3);
         break;
       default:

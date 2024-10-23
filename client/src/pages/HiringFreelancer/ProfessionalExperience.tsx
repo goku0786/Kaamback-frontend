@@ -24,7 +24,7 @@ const ProfessionalExperience: React.FC = () => {
 
   const prevStep = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    navigate("/hiring/gettingStarted");
+    navigate("/hiring/set-freelancer/gettingStarted");
   };
 
   const nextStep = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -38,7 +38,7 @@ const ProfessionalExperience: React.FC = () => {
       linkedIn,
       worked,
     }));
-    navigate("/hiring/profileSetup");
+    navigate("/hiring/set-freelancer/profileSetup");
   };
 
   const addSkill = () => {

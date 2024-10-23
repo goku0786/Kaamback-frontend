@@ -145,7 +145,7 @@ const ProfileSetup: React.FC = () => {
 
       if (result.success) {
         console.log(result.message);
-        navigate("/hiring/applicationSubmitted");
+        navigate("/hiring/set-freelancer/applicationSubmitted");
       } else {
         setErrorMessage("Failed to submit freelancer details.");
       }
@@ -157,7 +157,7 @@ const ProfileSetup: React.FC = () => {
 
   // Navigate to the previous page
   const prevStep = () => {
-    navigate("/hiring/professionalExperience");
+    navigate("/hiring/set-freelancer/professionalExperience");
   };
 
   return (

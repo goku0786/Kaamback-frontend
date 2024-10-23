@@ -26,6 +26,17 @@ export const AuthProvider = ({ children }) => {
     profilePhoto: File | null,
     resume: File | null,
   });
+  const [companyDetails, setCompanyDetails] = useState({
+    name: "",
+    address: "",
+    email: "",
+    phone: "",
+    website: "",
+    registrationNumber: "",
+    industry: "",
+    description: "",
+    logo: File | null,
+  });
 
   // Function to handle signup success
   const handleSignupSuccess = (userEmail) => {
@@ -87,6 +98,8 @@ export const AuthProvider = ({ children }) => {
         logout,
         freelancerDetails,
         setFreelancerDetails,
+        companyDetails,
+        setCompanyDetails,
       }}
     >
       {children}
