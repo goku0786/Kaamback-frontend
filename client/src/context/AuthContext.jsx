@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [email, setEmail] = useState(null);
   const [redirectPath, setRedirectPath] = useState("/");
   const [user, setUser] = useState(null);
+  const [jobDetail, setJobDetail] = useState(null);
   const [freelancerDetails, setFreelancerDetails] = useState({
     fullName: "",
     birthDate: "",
@@ -100,6 +101,8 @@ export const AuthProvider = ({ children }) => {
         setFreelancerDetails,
         companyDetails,
         setCompanyDetails,
+        jobDetail,
+        setJobDetail,
       }}
     >
       {children}

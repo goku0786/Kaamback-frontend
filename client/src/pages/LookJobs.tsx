@@ -1,21 +1,21 @@
 // import JobOpening from '../components/JobOpening';
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { AuthContext } from "../context/AuthContext";
 
 const JobPage: React.FC = () => {
   const navigate = useNavigate(); // Initialize useNavigate
   const [jobs, setJobs] = useState<any[]>([]); // State to store job listings
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState<string | null>(null); // Error state
+  const { setJobDetail } = useContext(AuthContext);
 
   // Fetch job listings from the API
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch(
-          "api/freelancer/feed?page=1&limit=10"
-        );
+        const response = await fetch("api/freelancer/feed?page=1&limit=10");
         if (!response.ok) {
           throw new Error("Failed to fetch jobs");
         }
@@ -23,7 +23,8 @@ const JobPage: React.FC = () => {
         // console.log(data);
         // console.log(data.data);
         // console.log(data.data[0].companyDetails);
-        setJobs(data.data); 
+        setJobDetail(data.data);
+        setJobs(data.data);
         setLoading(false);
       } catch (error: any) {
         setError(error.data.message || "An error occurred");
@@ -32,11 +33,14 @@ const JobPage: React.FC = () => {
     };
 
     fetchJobs();
-  }, []);
+  }, [setJobDetail]);
 
   // Function to handle navigation
   const handleApplyClick = () => {
     navigate("/application"); // Navigate to /application route
+  };
+  const handleGetDetails = (jobId: string) => {
+    navigate(`/job/details/${jobId}`);
   };
 
   if (loading) {
@@ -131,58 +135,71 @@ const JobPage: React.FC = () => {
             <div className="w-full md:w-1/2 space-y-10 ">
               {/* 1st Job Card */}
               {jobs.map((job) => (
-              <div key={job._id} className="bg-gray-100 p-5 rounded-lg flex flex-col md:flex-row justify-between items-center">
-                <div className="  mb-4 md:mb-0">
-                  <h3 className="text-lg font-bold">{job.jobTitle}</h3>
-                  <p className="text-gray-600 font-semibold">{job.companyDetails.name} - {job.companyDetails.industry}</p>
-                  <p className="text-gray-600">{job.jobType}</p>
-                  <span className="text-gray-600">Skills Required : </span>
-                  {
-                    job.skills.map((skill:any, index:any)=>(
-                      <span key={index} className="text-gray-600 mr-[5px]">&#x2022; {skill}</span>
-                    ))
-                  }
-                  <div className="flex items-center space-x-4 mt-2 text-sm text-gray-500">
-                    <div className="flex items-center">
-                      <svg
-                        className="w-4 h-4 mr-1"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12 2C8.134 2 5 5.134 5 9c0 4.418 5.373 10.163 6.586 11.414a1.992 1.992 0 002.828 0C13.627 19.163 19 13.418 19 9c0-3.866-3.134-7-7-7zm0 10c-1.654 0-3-1.346-3-3s1.346-3 3-3 3 1.346 3 3-1.346 3-3 3z" />
-                      </svg>
-                     {job.location}
-                    </div>
-                    <div className="flex items-center">
-                      <svg
-                        className="w-4 h-4 mr-1"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12 22c1.103 0 2-.897 2-2h-4c0 1.103.897 2 2 2zM17 14V8c0-3.309-2.691-6-6-6S5 4.691 5 8v6l-2 2v1h18v-1l-2-2z" />
-                      </svg>
-                     {job.duration}
-                    </div>
-                    <div className="flex items-center">
-                      <svg
-                        className="w-4 h-4 mr-1"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3c3.08 0 5.5 2.42 5.5 5.5 0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                      </svg>
-                     Rs. {job.expectedSalary}
+                <div
+                  key={job._id}
+                  className="bg-gray-100 p-5 rounded-lg flex flex-col md:flex-row justify-between items-center"
+                >
+                  <div className="  mb-4 md:mb-0">
+                    <h3 className="text-lg font-bold">{job.jobTitle}</h3>
+                    <p className="text-gray-600 font-semibold">
+                      {job.companyDetails.name} - {job.companyDetails.industry}
+                    </p>
+                    <p className="text-gray-600">{job.jobType}</p>
+                    <span className="text-gray-600">Skills Required : </span>
+                    {job.skills.map((skill: any, index: any) => (
+                      <span key={index} className="text-gray-600 mr-[5px]">
+                        &#x2022; {skill}
+                      </span>
+                    ))}
+                    <div className="flex items-center space-x-4 mt-2 text-sm text-gray-500">
+                      <div className="flex items-center">
+                        <svg
+                          className="w-4 h-4 mr-1"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M12 2C8.134 2 5 5.134 5 9c0 4.418 5.373 10.163 6.586 11.414a1.992 1.992 0 002.828 0C13.627 19.163 19 13.418 19 9c0-3.866-3.134-7-7-7zm0 10c-1.654 0-3-1.346-3-3s1.346-3 3-3 3 1.346 3 3-1.346 3-3 3z" />
+                        </svg>
+                        {job.location}
+                      </div>
+                      <div className="flex items-center">
+                        <svg
+                          className="w-4 h-4 mr-1"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M12 22c1.103 0 2-.897 2-2h-4c0 1.103.897 2 2 2zM17 14V8c0-3.309-2.691-6-6-6S5 4.691 5 8v6l-2 2v1h18v-1l-2-2z" />
+                        </svg>
+                        {job.duration}
+                      </div>
+                      <div className="flex items-center">
+                        <svg
+                          className="w-4 h-4 mr-1"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3c3.08 0 5.5 2.42 5.5 5.5 0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                        </svg>
+                        Rs. {job.expectedSalary}
+                      </div>
                     </div>
                   </div>
+                  <div className="flex flex-col gap-5">
+                    <button
+                      className="bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 px-6 rounded-lg"
+                      onClick={() => handleGetDetails(job._id)}
+                    >
+                     View Details
+                    </button>
+                    <button
+                      className="bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 px-6 rounded-lg"
+                      onClick={handleApplyClick}
+                    >
+                      Apply
+                    </button>
+                  </div>
                 </div>
-                <button
-                  className="bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 px-6 rounded-lg"
-                  onClick={handleApplyClick}
-                >
-                  Apply
-                </button>
-              </div>
-            ))}
+              ))}
             </div>
           </div>
         </div>
