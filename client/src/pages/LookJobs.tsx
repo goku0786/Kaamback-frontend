@@ -36,8 +36,8 @@ const JobPage: React.FC = () => {
   }, [setJobDetail]);
 
   // Function to handle navigation
-  const handleApplyClick = () => {
-    navigate("/application"); // Navigate to /application route
+  const handleApplyClick = (jobId: string) => {
+    navigate(`/application/${jobId}`); // Navigate to /application route
   };
   const handleGetDetails = (jobId: string) => {
     navigate(`/job/details/${jobId}`);
@@ -189,11 +189,11 @@ const JobPage: React.FC = () => {
                       className="bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 px-6 rounded-lg"
                       onClick={() => handleGetDetails(job._id)}
                     >
-                     View Details
+                      View Details
                     </button>
                     <button
                       className="bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 px-6 rounded-lg"
-                      onClick={handleApplyClick}
+                      onClick={() => handleApplyClick(job._id)}
                     >
                       Apply
                     </button>

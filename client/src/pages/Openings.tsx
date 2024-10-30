@@ -7,8 +7,8 @@ interface Job {
   _id: string;
   roleName: string;
   roleType: string;
-  createdAt: string; 
-  updatedAt: string; 
+  createdAt: string;
+  updatedAt: string;
 }
 
 // Define Response interface for the API response
@@ -20,7 +20,7 @@ interface JobOpeningsResponse {
 
 const Openings = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
-  const [error, setError] = useState<string | null>(null); 
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,11 +30,11 @@ const Openings = () => {
         if (!response.ok) {
           throw new Error("Failed to fetch job openings");
         }
-        const data: JobOpeningsResponse = await response.json(); 
-        console.log(data); 
+        const data: JobOpeningsResponse = await response.json();
+        console.log(data);
         if (data.success) {
           setJobs(data.openings);
-          setError(null); 
+          setError(null);
         } else {
           setError(data.message || "Failed to fetch job openings.");
           console.error("Failed to fetch job openings: ", data.message);
@@ -48,16 +48,16 @@ const Openings = () => {
     fetchJobOpenings();
   }, []);
 
-  const handleApplyNow = () => {
-    navigate("/application"); 
+  const handleApplyNow = (jobId: string) => {
+    navigate(`/application/${jobId}`);
   };
 
   function toTitleCase(str: string) {
     return str
-      .toLowerCase() 
-      .split(" ") 
+      .toLowerCase()
+      .split(" ")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" "); 
+      .join(" ");
   }
 
   return (
@@ -95,7 +95,7 @@ const Openings = () => {
                   </p>
                 </div>
                 <button
-                  onClick={handleApplyNow}
+                  onClick={() => handleApplyNow(job._id)}
                   className="mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full"
                 >
                   Apply Now

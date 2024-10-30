@@ -20,8 +20,8 @@ const JobDetails = () => {
 
   const job = jobDetail.find((job: any) => job._id === jobId);
 
-  const handleApplyClick = () => {
-    navigate("/application"); // Navigate to /application route
+  const handleApplyClick = (jobId: string) => {
+    navigate(`/application/${jobId}`); // Navigate to /application route
   };
 
   return (
@@ -96,7 +96,7 @@ const JobDetails = () => {
                 </p>
               </p>
               <button
-                onClick={handleApplyClick}
+                onClick={() => handleApplyClick(job._id)}
                 className="bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 px-16 rounded-lg mt-5"
               >
                 Apply

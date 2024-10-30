@@ -41,7 +41,7 @@ const ApplicationForm: React.FC = () => {
       {/* Use JobOpening component */}
       {/* <JobOpening userName="John Doe" /> */}
 
-      <Navbar/>
+      <Navbar />
 
       <div className="flex-grow flex items-center justify-center mt-20 ">
         <form

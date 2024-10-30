@@ -148,7 +148,7 @@ function App() {
             />
             {/* <Route path="/company-dashboard/profile" element={<Profile />} /> */}
             <Route path="/openings" element={<Openings />} />
-            <Route path="/application" element={<ApplicationForm />} />
+            <Route path="/application/:jobId" element={<ApplicationForm />} />
             <Route path="/submitted" element={<ApplicationSubmission />} />
             <Route path="/hire" element={<Hire />} />
             <Route path="/lookjobs" element={<JobPage />} />
