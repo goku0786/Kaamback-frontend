@@ -39,6 +39,8 @@ export const AuthProvider = ({ children }) => {
     logo: File | null,
   });
 
+  const [freelancerData, setFreelancerData] = useState(null);
+
   // Function to handle signup success
   const handleSignupSuccess = (userEmail) => {
     setEmail(userEmail);
@@ -84,6 +86,20 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  const setFreelancerDataState = (data) => {
+    localStorage.setItem("freelancerData", JSON.stringify(data));
+  };
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("freelancerData");
+    if (storedData) {
+      setFreelancerData(JSON.parse(storedData));
+    }
+  }, []);
+
+
+  
+
   return (
     <AuthContext.Provider
       value={{
@@ -103,6 +119,8 @@ export const AuthProvider = ({ children }) => {
         setCompanyDetails,
         jobDetail,
         setJobDetail,
+        freelancerData,
+        setFreelancerDataState
       }}
     >
       {children}

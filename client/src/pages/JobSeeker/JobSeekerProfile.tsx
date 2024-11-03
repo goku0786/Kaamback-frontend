@@ -1,13 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import { CgProfile } from "react-icons/cg";
 import { IoNotifications } from "react-icons/io5";
+import { AuthContext } from "../../context/AuthContext";
 
 const JobSeekerProfile: React.FC = () => {
+  const { freelancerData } = useContext(AuthContext);
+
+  // console.log("details from hiring application submitted ", freelancerData);
+
   return (
     <div className="h-screen overflow-y-hidden">
-      <div className="flex items-center justify-end p-5 gap-2">
+      <div className="flex items-center justify-end p-5 gap-5">
         <IoNotifications className="text-2xl cursor-pointer" />
-        <CgProfile className="text-3xl cursor-pointer" />
+        {freelancerData?.profile ? (
+          <img
+            src={freelancerData?.profile}
+            alt="profile"
+            className="w-10 h-10 rounded-full flex items-center justify-center"
+          />
+        ) : (
+          <CgProfile />
+        )}
       </div>
       <div className="p-10">
         <div className="flex justify-between items-center">

@@ -34,8 +34,8 @@ const ConfirmationPopup: React.FC<{
 
 const ProfileSetup: React.FC = () => {
   const navigate = useNavigate();
-  const { setFreelancerDetails } = useContext(AuthContext);
-  const { freelancerDetails } = useContext(AuthContext);
+  const { setFreelancerDetails, freelancerDetails, setFreelancerDataState } =
+    useContext(AuthContext);
 
   // Form state
   const [profilePhoto, setProfilePhoto] = useState<File | null>(null);
@@ -105,9 +105,9 @@ const ProfileSetup: React.FC = () => {
   const confirmSubmission = async () => {
     setShowPopup(false); // Close the popup
 
-    console.log("Selected Profile Photo:", freelancerDetails.profilePhoto);
-    console.log("Selected Resume:", freelancerDetails.resume);
-    console.log("here is freelancer details", freelancerDetails);
+    // console.log("Selected Profile Photo:", freelancerDetails.profilePhoto);
+    // console.log("Selected Resume:", freelancerDetails.resume);
+    // console.log("here is freelancer details", freelancerDetails);
 
     const formData = new FormData();
     formData.append("fullName", freelancerDetails.fullName);
@@ -144,7 +144,9 @@ const ProfileSetup: React.FC = () => {
       console.log(result);
 
       if (result.success) {
-        console.log(result.message);
+        // console.log(result.message);
+        // console.log(result.data);
+        await setFreelancerDataState(result.data);
         navigate("/hiring/set-freelancer/applicationSubmitted");
       } else {
         setErrorMessage("Failed to submit freelancer details.");

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { CgProfile } from "react-icons/cg";
 import { IoNotifications } from "react-icons/io5";
 import { HiOutlineFilter } from "react-icons/hi";
@@ -7,18 +7,37 @@ import money from "../../assets/money.jpg";
 import withdraw from "../../assets/withdraw.jpg";
 import projects from "../../assets/projects.jpg";
 import ongoing from "../../assets/ongoing.jpg";
+import { AuthContext } from "../../context/AuthContext";
 
 const JobSeekerDashboard: React.FC = () => {
+  const { freelancerData } = useContext(AuthContext);
+
+  // console.log("details from hiring application submitted ", freelancerData);
   return (
     <div className="py-5">
       <div className="flex justify-end px-10">
         <div className="flex items-center justify-between gap-10 px-5 py-3 bg-white rounded-lg ">
           <Link to="#" className="text-3xl">
-            <CgProfile />
+            {
+              freelancerData?.profile ? (
+                <img
+                  src={freelancerData?.profile}
+                  alt="profile"
+                  className="w-10 h-10 rounded-full flex items-center justify-center"
+                />
+              ) :
+              <CgProfile />
+              }
           </Link>
           <span className="font-semibold hover:underline cursor-pointer">
-            <p>Mark Antony</p>
-            <p>UI/UX Designer</p>
+            <p>
+              <span className="text-sm">Username:</span>{" "}
+              {freelancerData?.fullName}
+            </p>
+            <p>
+              <span className="text-sm">Role:</span>{" "}
+              {freelancerData?.primaryJob}
+            </p>
           </span>
           <Link to="#" className="text-3xl">
             <IoNotifications />
@@ -27,7 +46,7 @@ const JobSeekerDashboard: React.FC = () => {
       </div>
       <div className="p-10 flex flex-col gap-10">
         <span>
-          <h1 className="text-2xl font-bold">Hello, Mark Antony</h1>
+          <h1 className="text-2xl font-bold">Hello,  {freelancerData?.fullName}</h1>
           <h3 className="text-lg text-gray-500 font-semibold">
             Check your activities in this dashboard
           </h3>

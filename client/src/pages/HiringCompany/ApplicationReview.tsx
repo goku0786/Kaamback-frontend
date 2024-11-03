@@ -5,9 +5,9 @@ import { AuthContext } from "../../context/AuthContext";
 
 const ApplicationReview: React.FC = () => {
   const navigate = useNavigate();
-  const { freelancerDetails } = useContext(AuthContext);
+  const { companyDetails } = useContext(AuthContext);
 
-  console.log("details from hiring application submitted ", freelancerDetails);
+  console.log("details from hiring company application submitted ", companyDetails);
 
   // Get current date
   const currentDate = new Date();
