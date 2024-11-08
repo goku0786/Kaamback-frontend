@@ -146,7 +146,13 @@ const Openings: React.FC = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await fetch("api/freelancer/feed?page=1&limit=10");
+        const response = await fetch("api/freelancer/feed?page=1&limit=10", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch jobs");
         }
@@ -185,8 +191,15 @@ const Openings: React.FC = () => {
       {/* <JobOpening  /> */}
 
       {/* Main Section */}
-      {loading ? (
-        <p className="mt-20 text-center">Loading...</p>
+      {jobs.length === 0 ? (
+        <p className="text-center text-2xl font-bold text-gray-700 mt-16">
+          {" "}
+          No job openings available at this moment.
+        </p>
+      ) : loading ? (
+        <p className="text-center text-lg font-bold text-gray-700 mt-16">
+          Loading...
+        </p>
       ) : (
         <div className=" mt-16 flex justify-center w-full">
           <div className=" flex flex-col items-center md:w-1/2 w-full px-20 md:px-0 ">
@@ -211,8 +224,7 @@ const Openings: React.FC = () => {
                     <div className="  mb-4 md:mb-0">
                       <h3 className="text-lg font-bold">{job.jobTitle}</h3>
                       <p className="text-gray-600 font-semibold">
-                        {job.companyDetails.name} -
-                        {job.companyDetails.industry}
+                        {job.companyDetails.name} -{job.companyDetails.industry}
                       </p>
                       <p className="text-gray-600">{job.jobType}</p>
                       <span className="text-gray-600">Skills Required : </span>
